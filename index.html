@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Les petits plats</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/e59ea1f6c2.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <img
+        class="background-logo"
+        src="assets/png/background-logo.png"
+        alt="backgroung logo"
+      />
+      <h1>
+        <img class="logo" src="assets/png/logo.png" alt="logo petits plats" />
+      </h1>
+      <p>
+        CHERCHEZ PARMI PLUS DE 1500 RECETTES<br />
+        DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
+      </p>
+      <form class="research">
+        <input
+          type="text"
+          class="research_text"
+          name="recherche"
+          placeholder="Rechercher une recette, un ingrédient, ..."
+        />
+        <div class="research_logo-container">
+          <input
+            type="image"
+            src="assets/png/search.png"
+            alt="Rechercher une recette"
+            class="research_logo default"
+          />
+          <input
+            type="image"
+            src="assets/png/hover-search.png"
+            alt="Rechercher une recette"
+            class="research_logo hover"
+          />
+        </div>
+      </form>
+    </header>
+
+    <main>
+      <!-- "Ingrédients" filter -->
+      <div class="tag-research">
+        <div id="ingredientsFilter" class="filter">
+          <div id="ingredients" class="filterBtn">
+            <span class="filterBtnName">Ingrédients</span>
+            <button class="ingredientsToggleBtn">
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- "Appareils" filter -->
+        <div id="appliancesFilter" class="filter">
+          <div id="appliances" class="filterBtn">
+            <span class="filterBtnName">Appareils</span>
+            <button class="appliancesToggleBtn">
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- "Ustensiles" filter -->
+        <div id="utensilsFilter" class="filter">
+          <div id="utensils" class="filterBtn">
+            <span class="filterBtnName">Ustensiles</span>
+            <button class="utensilsToggleBtn">
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div id="cardsContainer"></div>
+    </main>
+
+    <script type="module" src="scripts/pages/index.js"></script>
+  </body>
+</html>

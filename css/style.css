@@ -1,0 +1,240 @@
+@charset "UTF-8";
+body {
+  margin: 0;
+}
+
+header {
+  display: flex;
+}
+
+img {
+  object-fit: cover;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+main {
+  position: relative;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), linear-gradient(0deg, #e5e5e5, #e5e5e5);
+  border: 1px solid rgba(0, 0, 0, 0.1019607843);
+}
+
+/*header*/
+.background-logo {
+  height: 667px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.logo {
+  position: absolute;
+  width: 207px;
+  height: 25.26px;
+  top: 51px;
+  left: 69px;
+}
+
+header p {
+  position: absolute;
+  display: flex;
+  width: 60%;
+  top: 245px;
+  left: 21%;
+  font-size: 44px;
+  color: #ffd15b;
+  text-align: center;
+  justify-content: center;
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+}
+
+.research {
+  display: flex;
+  position: absolute;
+  top: 450.42px;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.research_text {
+  width: 954px;
+  height: 72px;
+  padding-left: 30px;
+  border-radius: 11px;
+}
+
+.research_logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.research_logo-container .hover {
+  display: none;
+}
+
+.research_logo {
+  margin-left: -52px;
+  width: 44px;
+  margin-top: 7px;
+}
+
+.default:hover {
+  display: none;
+}
+
+.research_logo-container:hover .hover {
+  display: inline;
+  margin-left: -48px;
+}
+
+.reset-research {
+  position: absolute;
+  display: flex;
+  right: 340px;
+  top: 20px;
+  border: none;
+  background: none;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*label */
+.filter {
+  position: relative;
+  width: 200px;
+  z-index: 5;
+}
+
+.tag-research {
+  margin-left: 100px;
+  display: flex;
+  gap: 80px;
+  margin-top: 20px;
+}
+
+.filterBtn {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 5px;
+  width: 200px;
+  background-color: #fff;
+  padding: 16px 10px;
+}
+
+.filterBtnName {
+  padding-left: 10px;
+  font-size: 16px;
+}
+
+.ingredientsToggleBtn,
+.appliancesToggleBtn,
+.utensilsToggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+  margin-left: auto;
+}
+
+/* Ajout de style pour les icônes chevron-down */
+.ingredientsToggleBtn i.fa-chevron-down,
+.appliancesToggleBtn i.fa-chevron-down,
+.utensilsToggleBtn i.fa-chevron-down {
+  border: none;
+}
+
+#cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  width: calc(33.3333% - 20px);
+  margin: 30px;
+}
+
+.custom-card {
+  width: 380px;
+  border-radius: 21px;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-image {
+  width: 100%;
+  height: 253px;
+  border-radius: 21px 21px 0 0;
+}
+
+.custom-body {
+  padding: 1rem;
+}
+
+.custom-title {
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Anton", sans-serif;
+  color: #1b1b1b;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.custom-subtitle {
+  font-size: 14px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  color: #7a7a7a;
+}
+
+.custom-muted {
+  color: #7a7a7a !important;
+}
+
+.custom-letter-spacing {
+  letter-spacing: 0.09em !important;
+}
+
+.custom-description {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1b1b1b;
+  font-family: "Manrope", sans-serif;
+  padding-bottom: 20px;
+}
+
+.custom-ingredients {
+  margin-top: 5px;
+}
+
+.custom-ingredient-name {
+  font-weight: 400;
+  font-size: 14px;
+  color: #1b1b1b;
+  margin-bottom: 0;
+}
+
+.custom-ingredient-quantity {
+  font-size: 14px;
+  color: #7a7a7a;
+}
+
+.duration-badge {
+  background-color: #ffd15b;
+  border-radius: 14px;
+  width: auto;
+  height: 26px;
+  position: absolute;
+  top: 21px;
+  left: 295px;
+  padding: 5px 15px 5px 15px;
+  font-size: 12px;
+}
+
+/*# sourceMappingURL=style.css.map */
