@@ -1,10 +1,23 @@
 @charset "UTF-8";
+:root {
+  --color-primary: #ffd15b;
+  --color-dark: #1b1b1b;
+  --color-light: #fff;
+}
+
 body {
   margin: 0;
 }
 
 header {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 667px;
+  text-align: center;
+  background: url("/assets/png/background-logo.png") no-repeat;
+  background-size: cover;
 }
 
 img {
@@ -20,6 +33,7 @@ main {
   position: relative;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), linear-gradient(0deg, #e5e5e5, #e5e5e5);
   border: 1px solid rgba(0, 0, 0, 0.1019607843);
+  padding: 0 102px;
 }
 
 /*header*/
@@ -37,31 +51,24 @@ main {
   left: 69px;
 }
 
-header p {
-  position: absolute;
-  display: flex;
+header > h1 {
   width: 60%;
-  top: 245px;
-  left: 21%;
   font-size: 44px;
+  line-height: 66.24px;
   color: #ffd15b;
-  text-align: center;
-  justify-content: center;
   font-family: "Anton", sans-serif;
   font-weight: 400;
+  margin-bottom: 29.42px;
 }
 
 .research {
   display: flex;
-  position: absolute;
-  top: 450.42px;
-  left: 0;
-  width: 100%;
   justify-content: center;
+  width: 66.25%;
 }
 
 .research_text {
-  width: 954px;
+  width: 100%;
   height: 72px;
   padding-left: 30px;
   border-radius: 11px;
@@ -76,10 +83,14 @@ header p {
   display: none;
 }
 
-.research_logo {
-  margin-left: -52px;
-  width: 44px;
-  margin-top: 7px;
+.research .btn {
+  --bs-btn-bg: var(--color-dark);
+  --bs-btn-color: var(--color-light);
+  --bs-btn-hover-bg: var(--color-primary);
+  --bs-btn-hover-color: var(--color-dark);
+  width: 51px;
+  height: 51px;
+  margin-left: -61px;
 }
 
 .default:hover {
@@ -103,61 +114,11 @@ header p {
   cursor: pointer;
 }
 
-/*label */
-.filter {
-  position: relative;
-  width: 200px;
-  z-index: 5;
-}
-
-.tag-research {
-  margin-left: 100px;
-  display: flex;
-  gap: 80px;
-  margin-top: 20px;
-}
-
-.filterBtn {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  border-radius: 5px;
-  width: 200px;
-  background-color: #fff;
-  padding: 16px 10px;
-}
-
-.filterBtnName {
-  padding-left: 10px;
-  font-size: 16px;
-}
-
-.ingredientsToggleBtn,
-.appliancesToggleBtn,
-.utensilsToggleBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0 10px;
-  margin-left: auto;
-}
-
-/* Ajout de style pour les icônes chevron-down */
-.ingredientsToggleBtn i.fa-chevron-down,
-.appliancesToggleBtn i.fa-chevron-down,
-.utensilsToggleBtn i.fa-chevron-down {
-  border: none;
-}
-
 #cardsContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.card {
-  width: calc(33.3333% - 20px);
-  margin: 30px;
+  row-gap: 66px;
+  column-gap: 48px;
 }
 
 .custom-card {
@@ -165,6 +126,7 @@ header p {
   border-radius: 21px;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .custom-image {
@@ -232,9 +194,199 @@ header p {
   height: 26px;
   position: absolute;
   top: 21px;
-  left: 295px;
+  right: 22px;
   padding: 5px 15px 5px 15px;
   font-size: 12px;
+}
+
+/*label */
+/* Style pour le nombre total de recettes */
+#totalRecipes {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 31.61px;
+  color: #1b1b1b;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.filter {
+  position: relative;
+  width: 200px;
+  z-index: 5;
+}
+
+.tag-research {
+  display: flex;
+  gap: 80px;
+  margin-top: 20px;
+  margin-bottom: 55px;
+}
+
+.filterBtn {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 5px;
+  width: 195px;
+  background-color: #fff;
+  padding: 16px 10px;
+  position: relative;
+}
+
+.filterBtnName {
+  font-size: 16px;
+}
+
+.ingredientsToggleBtn,
+.appliancesToggleBtn,
+.ustensilsToggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+  margin-left: auto;
+}
+
+/* Ajout de style pour les icônes chevron-down */
+.ingredientsToggleBtn i.fa-chevron-down,
+.appliancesToggleBtn i.fa-chevron-down,
+.ustensilsToggleBtn i.fa-chevron-down {
+  border: none;
+}
+
+/* ajout style recherche */
+.inputFilterBtn {
+  display: none;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.filterBtn.active .inputFilterBtn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.filterInputContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+}
+
+.filterInput {
+  width: 100%;
+  height: 36px;
+  background: none;
+  border: none;
+}
+
+.filterInput:focus {
+  outline: none;
+}
+
+.searchInputButton,
+.delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #7a7a7a;
+}
+
+.appliancesToggleBtn + .filterInput:not(:placeholder-shown) + .closebutton-appliance {
+  display: flex;
+}
+
+.ustensilsToggleBtn + .filterInput:not(:placeholder-shown) + .closebutton-ustensils {
+  display: flex;
+}
+
+.ingredientsToggleBtn + .filterInput:not(:placeholder-shown) + .closebutton-ingredients {
+  display: flex;
+}
+
+.searchInputButton i {
+  color: #7a7a7a;
+}
+
+.filterBtn.active .filterList {
+  display: block;
+  height: 315px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.filterBtn.active i.fa-chevron-down::before {
+  content: "\f106";
+  transform: rotate(180deg);
+}
+
+.filterBtn.active {
+  display: block;
+}
+
+.filterBtn.active i.fa-chevron-down {
+  position: absolute;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.filterList.hidden {
+  display: none;
+}
+
+.closebutton-appliance,
+.closebutton-ustensils,
+.closebutton-ingredients {
+  display: none;
+  border: none;
+  background: none;
+  color: #7a7a7a;
+}
+
+/*Style listes ingrédents, appareils et ustensils */
+#ingredientsList,
+#appliancesList,
+#ustensilsList {
+  margin-top: 13px;
+}
+
+#ingredientsList option:hover,
+#appliancesList option:hover,
+#ustensilsList option:hover {
+  background-color: #ffd15b;
+}
+
+#ingredientsList,
+#appliancesList,
+#ustensilsList {
+  scrollbar-width: thin; /* Pour Firefox */
+  scrollbar-color: transparent transparent; /* Pour Firefox */
+}
+
+#ingredientsList::-webkit-scrollbar,
+#appliancesList::-webkit-scrollbar,
+#ustensilsList::-webkit-scrollbar {
+  width: 5px;
+}
+
+#ingredientsList::-webkit-scrollbar-thumb,
+#appliancesList::-webkit-scrollbar-thumb,
+#ustensilsList::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+#ingredientsList::-webkit-scrollbar-track,
+#appliancesList::-webkit-scrollbar-track,
+#ustensilsList::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 /*# sourceMappingURL=style.css.map */

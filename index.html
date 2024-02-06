@@ -28,38 +28,32 @@
   </head>
   <body>
     <header>
-      <img
-        class="background-logo"
-        src="assets/png/background-logo.png"
-        alt="backgroung logo"
-      />
+      <img class="logo" src="assets/png/logo.png" alt="logo petits plats" />
       <h1>
-        <img class="logo" src="assets/png/logo.png" alt="logo petits plats" />
-      </h1>
-      <p>
         CHERCHEZ PARMI PLUS DE 1500 RECETTES<br />
         DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
-      </p>
+      </h1>
       <form class="research">
         <input
           type="text"
+          id="searchInput"
           class="research_text"
           name="recherche"
           placeholder="Rechercher une recette, un ingrédient, ..."
         />
         <div class="research_logo-container">
-          <input
-            type="image"
-            src="assets/png/search.png"
-            alt="Rechercher une recette"
-            class="research_logo default"
-          />
-          <input
-            type="image"
-            src="assets/png/hover-search.png"
-            alt="Rechercher une recette"
-            class="research_logo hover"
-          />
+          <button class="btn">
+            <svg class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+              <path
+                d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+                stroke="currentColor"
+                fill="none"
+                fill-rule="evenodd"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </button>
         </div>
       </form>
     </header>
@@ -73,6 +67,26 @@
             <button class="ingredientsToggleBtn">
               <i class="fa-solid fa-chevron-down"></i>
             </button>
+            <div id="ingredientsList" class="filterList hidden">
+              <div class="inputFilterBtn">
+                <div class="filterInputContainer">
+                  <input
+                    type="text"
+                    id="ingredientsSearchInput"
+                    class="filterInput"
+                  />
+                  <button class="closebutton-ingredients delete">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    id="ingredientsSearchButton"
+                    class="searchInputButton"
+                  >
+                    <i class="fa-solid fa-magnifying-glass filtersIcon"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -83,18 +97,55 @@
             <button class="appliancesToggleBtn">
               <i class="fa-solid fa-chevron-down"></i>
             </button>
+            <div id="appliancesList" class="filterList hidden">
+              <div class="inputFilterBtn">
+                <div class="filterInputContainer">
+                  <input
+                    type="text"
+                    id="appliancesSearchInput"
+                    class="filterInput"
+                  />
+                  <button class="closebutton-appliance delete">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                  <button id="appliancesSearchButton" class="searchInputButton">
+                    <i class="fa-solid fa-magnifying-glass filtersIcon"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- "Ustensiles" filter -->
-        <div id="utensilsFilter" class="filter">
-          <div id="utensils" class="filterBtn">
+        <div id="ustensilsFilter" class="filter">
+          <div id="ustensils" class="filterBtn">
             <span class="filterBtnName">Ustensiles</span>
-            <button class="utensilsToggleBtn">
+            <button class="ustensilsToggleBtn">
               <i class="fa-solid fa-chevron-down"></i>
             </button>
+            <div id="ustensilsList" class="filterList hidden">
+              <div class="inputFilterBtn">
+                <div class="filterInputContainer">
+                  <input
+                    type="text"
+                    id="ustensilsSearchInput"
+                    class="filterInput"
+                  />
+                  <button class="closebutton-ustensils delete">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                  <button id="ustensilsSearchButton" class="searchInputButton">
+                    <i class="fa-solid fa-magnifying-glass filtersIcon"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- Nombre total de recettes trouvées -->
+        <div id="totalRecipes"></div>
       </div>
 
       <!-- Cards -->
@@ -102,5 +153,8 @@
     </main>
 
     <script type="module" src="scripts/pages/index.js"></script>
+    <script type="module" src="scripts/templates/label-content.js"></script>
+    <script type="module" src="scripts/utils/label-research.js"></script>
+    <script type="module" src="scripts/utils/main-research.js"></script>
   </body>
 </html>

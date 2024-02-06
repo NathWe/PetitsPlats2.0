@@ -1,12 +1,8 @@
 #cardsContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.card {
-  width: calc(33.3333% - 20px);
-  margin: 30px;
+  row-gap: 66px;
+  column-gap: 48px;
 }
 
 .custom-card {
@@ -14,6 +10,7 @@
   border-radius: 21px;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .custom-image {
@@ -81,7 +78,7 @@
   height: 26px;
   position: absolute;
   top: 21px;
-  left: 295px;
+  right: 22px;
   padding: 5px 15px 5px 15px;
   font-size: 12px;
 }
