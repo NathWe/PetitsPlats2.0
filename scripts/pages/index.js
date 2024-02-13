@@ -1,6 +1,5 @@
-import { recipes } from '../../data/recipes.js';
-import { createCardHTML } from '../templates/card.js';
 import { cardDetails } from '../models/data-card.js';
+import { createCardHTML } from '../templates/card.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const cardsContainer = document.getElementById('cardsContainer');
@@ -27,10 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Génère le HTML des cartes et ajoute au conteneur
         cardsContainer.innerHTML = '';
-        filteredRecipes.forEach((recipe) => {
-            const cardHTML = createCardHTML(recipe);
+        let i = 0;
+        while (i < filteredRecipes.length) {
+            const cardHTML = createCardHTML(filteredRecipes[i]);
             cardsContainer.innerHTML += cardHTML;
-        });
+            i++;
+        }
     };
 
     searchInput.addEventListener('input', updateRecipeCards);
@@ -39,8 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalRecipes = cardDetails.length;
     totalRecipesElement.textContent = `${totalRecipes} recettes`;
 
-    cardDetails.forEach((recipe) => {
-        const cardHTML = createCardHTML(recipe);
+    let j = 0;
+    while (j < cardDetails.length) {
+        const cardHTML = createCardHTML(cardDetails[j]);
         cardsContainer.innerHTML += cardHTML;
-    });
+        j++;
+    }
 });
