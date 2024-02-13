@@ -1,4 +1,4 @@
-import { recipes } from '../../data/recipes.js';
+import { cardDetails } from '../../data/recipes.js';
 import { createCardHTML } from '../templates/card.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fonction de filtrage des recettes en fonction de la recherche
     const filterRecipes = (searchTerm) => {
-        return recipes.filter(recipe =>
+        return cardDetails.filter(recipe =>
             recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTerm.toLowerCase())) ||
             recipe.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalRecipes = filteredRecipes.length;
         totalRecipesElement.textContent = `${totalRecipes} recettes`;
 
-        // Génère le HTML des cartes et ajouter au conteneur
+        // Génère le HTML des cartes et ajoute au conteneur
         cardsContainer.innerHTML = '';
         filteredRecipes.forEach((recipe) => {
             const cardHTML = createCardHTML(recipe);
@@ -35,10 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', updateRecipeCards);
 
     // Au chargement initial, affiche toutes les recettes
-    const totalRecipes = recipes.length;
+    const totalRecipes = cardDetails.length;
     totalRecipesElement.textContent = `${totalRecipes} recettes`;
 
-    recipes.forEach((recipe) => {
+    cardDetails.forEach((recipe) => {
         const cardHTML = createCardHTML(recipe);
         cardsContainer.innerHTML += cardHTML;
     });
