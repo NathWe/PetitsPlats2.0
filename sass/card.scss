@@ -2,11 +2,11 @@
   display: flex;
   flex-wrap: wrap;
   row-gap: 66px;
-  column-gap: 48px;
+  column-gap: 46px;
 }
 
 .custom-card {
-  width: 380px;
+  max-width: 380px;
   border-radius: 21px;
   display: flex;
   flex-direction: column;

@@ -3,6 +3,7 @@ import { cardDetails } from '../../scripts/models/data-card.js';
 
 export function createCardHTML(card) {
   return `
+  <a href="#" class="recipe-card-link">
     <div class="card custom-card recipe-card">
       <div class="position-relative">
         <img src="assets/photos-recettes/${card.image}" class="card-img-top custom-image" alt="${card.name}">
@@ -20,16 +21,20 @@ export function createCardHTML(card) {
         </div>
       </div>
     </div>
+    </a>
   `;
 }
 
 function generateIngredientsHTML(ingredients) {
-  return ingredients.map(ingredient => `
-      <div class="col-md-6 custom-ingredient">
-        <p class="custom-ingredient-name">${ingredient.ingredient}</p>
-        ${ingredient.quantity ? `<p class="custom-ingredient-quantity">${ingredient.quantity} ${ingredient.unit || ''}</p>` : ''}
-      </div>
+  const ingredientsHTML = ingredients.map(ingredient => `
+    <div class="col-md-6 custom-ingredient">
+      <p class="custom-ingredient-name">${ingredient.ingredient}</p>
+      ${ingredient.quantity ? `<p class="custom-ingredient-quantity">${ingredient.quantity} ${ingredient.unit || ''}</p>` : ''}
+    </div>
   `).join('');
+
+  return `<div class="row custom-ingredients">${ingredientsHTML}</div>`;
 }
+
 
 

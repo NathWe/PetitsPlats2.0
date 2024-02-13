@@ -33,15 +33,20 @@
         CHERCHEZ PARMI PLUS DE 1500 RECETTES<br />
         DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
       </h1>
-      <form class="research">
-        <input
-          type="text"
-          id="searchInput"
-          class="research_text"
-          name="recherche"
-          placeholder="Rechercher une recette, un ingrédient, ..."
-        />
-        <div class="research_logo-container">
+      <div class="research">
+        <div class="text">
+          <input
+            type="text"
+            class="research_text"
+            id="searchInput"
+            name="recherche"
+            placeholder="Rechercher une recette, un ingrédient, ..."
+          />
+          <button class="closebutton-delete">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+
+
           <button class="btn">
             <svg class="DocSearch-Search-Icon" viewBox="0 0 20 20">
               <path
@@ -55,9 +60,9 @@
             </svg>
           </button>
         </div>
-      </form>
+        </div>
+      </div>
     </header>
-
     <main>
       <!-- "Ingrédients" filter -->
       <div class="tag-research">
@@ -117,7 +122,7 @@
           </div>
         </div>
 
-        <!-- "Ustensiles" filter -->
+        <!-- "Ustensils" filter -->
         <div id="ustensilsFilter" class="filter">
           <div id="ustensils" class="filterBtn">
             <span class="filterBtnName">Ustensiles</span>
@@ -147,14 +152,16 @@
         <!-- Nombre total de recettes trouvées -->
         <div id="totalRecipes"></div>
       </div>
-
+      <!-- Éléments des filtres sélectionnés -->
+      <span class="select-option"></span>
       <!-- Cards -->
       <div id="cardsContainer"></div>
     </main>
 
     <script type="module" src="scripts/pages/index.js"></script>
-    <script type="module" src="scripts/templates/label-content.js"></script>
+    <script type="module" src="scripts/templates/select-options.js"></script>
     <script type="module" src="scripts/utils/label-research.js"></script>
-    <script type="module" src="scripts/utils/main-research.js"></script>
+    <script type="module" src="scripts/utils/searchBar.js"></script>
+    <script type="module" src="scripts/utils/recipe-search.js"></script>
   </body>
 </html>
