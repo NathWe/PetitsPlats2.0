@@ -1,5 +1,6 @@
-import { cardDetails } from '../../data/recipes.js';
+import { recipes } from '../../data/recipes.js';
 import { createCardHTML } from '../templates/card.js';
+import { cardDetails } from '../models/data-card.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const cardsContainer = document.getElementById('cardsContainer');
