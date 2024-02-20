@@ -66,6 +66,7 @@ header > h1 {
   flex-wrap: wrap;
   row-gap: 66px;
   column-gap: 46px;
+  margin-top: 43px;
 }
 
 .custom-card {
@@ -74,6 +75,7 @@ header > h1 {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  height: 100%;
 }
 
 .custom-image {
@@ -172,12 +174,12 @@ header > h1 {
 .select-option p {
   display: flex;
   background-color: #ffd15b;
-  width: 200px;
+  width: 203px;
   height: 53px;
   align-items: center;
-  margin-left: 100px;
+  margin: 10px 10px 10px 0px;
   border-radius: 5px;
-  padding-left: 15px;
+  padding: 16px 10px;
 }
 
 .select-option button {
@@ -194,7 +196,7 @@ header > h1 {
   display: flex;
   gap: 80px;
   margin-top: 20px;
-  margin-bottom: 55px;
+  margin-bottom: 25px;
 }
 
 .filterBtn {

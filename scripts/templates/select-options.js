@@ -1,4 +1,5 @@
 import { cardDetails } from '../models/data-card.js';
+import { SearchEngine } from '../utils/searchEngine.js';
 
 const labelIngredient = document.querySelector('#ingredientsList');
 const labelUstensils = document.querySelector('#ustensilsList');

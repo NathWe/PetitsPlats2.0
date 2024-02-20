@@ -24,12 +24,12 @@
 .select-option p {
   display: flex;
   background-color: #ffd15b;
-  width: 200px;
+  width: 203px;
   height: 53px;
   align-items: center;
-  margin-left: 100px;
+  margin: 10px 10px 10px 0px;
   border-radius: 5px;
-  padding-left: 15px;
+  padding: 16px 10px;
 }
 
 .select-option button {
@@ -46,7 +46,7 @@
   display: flex;
   gap: 80px;
   margin-top: 20px;
-  margin-bottom: 55px;
+  margin-bottom: 25px;
 }
 
 .filterBtn {
