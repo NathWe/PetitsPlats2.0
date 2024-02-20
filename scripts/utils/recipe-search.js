@@ -115,6 +115,9 @@ function filterRecipes(text) {
         errorMessageElement.classList.add('error-message');
         recipeCardsContainer.innerHTML = '';
         recipeCardsContainer.appendChild(errorMessageElement);
+    } else {
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
     }
 
     // Mise à jour de l'affichage des recettes
@@ -175,10 +178,20 @@ function optionSelect(option, selectedItems) {
             console.log('Option sélectionnée retirée de selectContainer:', button);
 
             // Désélectionne l'option correspondante dans la liste déroulante
-            option.selected = false;
+            const optionToRemove = Array.from(selectContainer.children).find(child => child.textContent === optionText);
+            if (optionToRemove) {
+                const select = optionToRemove.closest('select');
+                if (select) {
+                    select.value = 'default';
+                }
+            }
 
-            // Mise à jour des recettes filtrées
+            // Met à jour le style de l'option dans la liste déroulante
+            option.style.backgroundColor = 'transparent';
+
+            // Met à jour les recettes filtrées et le nombre total de recettes
             filterRecipes(searchBar.value);
+            updateTotalRecipesCount();
             console.log('Options sélectionnées:', selectedItems);
         });
 
@@ -186,10 +199,13 @@ function optionSelect(option, selectedItems) {
         selectContainer.appendChild(button);
         console.log('Option sélectionnée ajoutée à selectContainer:', button);
 
-        // Mise à jour de l'apparence de l'option sélectionnée dans le menu déroulant
+        // Met à jour le style de l'option dans la liste déroulante
         option.style.backgroundColor = '#FFD15B';
 
-        // Mse à jour des recettes filtrées et le nombre total de recettes
+        // Ajoute la classe "selected" à l'option dans la liste déroulante
+        option.classList.add('selected');
+
+        // Met à jour les recettes filtrées et le nombre total de recettes
         filterRecipes(searchBar.value);
         updateTotalRecipesCount();
     }
