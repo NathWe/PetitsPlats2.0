@@ -1,5 +1,6 @@
 import { recipes } from '../../data/recipes.js';
 import { createCardHTML } from '../templates/card.js';
+import { SearchEngine } from '../utils/searchEngine.js';
 
 const ingredientsOptions = document.querySelectorAll('#ingredientsList option');
 const applianceOptions = document.querySelectorAll('#appliancesList option');
@@ -10,7 +11,6 @@ const ustensilsSearch = document.querySelectorAll('#ustensilsSearchInput');
 const closeAppliance = document.querySelectorAll('.closebutton-appliance')
 const closeIngredient = document.querySelectorAll('.closebutton-ingredients')
 const closeUstensils = document.querySelectorAll('.closebutton-ustensils')
-
 
 function updateRecipeCards(clickedElement) {
     if (!clickedElement) return;
@@ -31,7 +31,7 @@ function updateRecipeCards(clickedElement) {
         cardsContainer.innerHTML += cardHTML;
     });
 
-    // Met à jour le nombre total de recettes
+    // Mise à jour du nombre total de recettes
     updateTotalRecipes();
 }
 
@@ -80,7 +80,10 @@ ingredientsSearch.forEach(input => {
         } else {
             closeButton.classList.remove('closebutton-ingredients');
         }
-        updateRecipeCards();
+        // Appel de la fonction SearchEngine avec les paramètres appropriés
+        const filteredRecipes = SearchEngine(recipes, searchText, selectedIngredients, selectedAppliances, selectedUstensils);
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
         updateTotalRecipes();
     });
 });
@@ -97,7 +100,10 @@ applianceSearch.forEach(input => {
         } else {
             closeButton.classList.remove('closebutton-appliance');
         }
-        updateRecipeCards();
+        // Appel de la fonction SearchEngine avec les paramètres appropriés
+        const filteredRecipes = SearchEngine(recipes, searchText, selectedIngredients, selectedAppliances, selectedUstensils);
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
         updateTotalRecipes();
     });
 });
@@ -114,7 +120,10 @@ ustensilsSearch.forEach(input => {
         } else {
             closeButton.classList.remove('closebutton-ustensils');
         }
-        updateRecipeCards();
+        // Appel de la fonction SearchEngine avec les paramètres appropriés
+        const filteredRecipes = SearchEngine(recipes, searchText, selectedIngredients, selectedAppliances, selectedUstensils);
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
         updateTotalRecipes();
     });
 });
@@ -135,6 +144,11 @@ closeIngredient.forEach(closeButton => {
             filterOptions(ingredientsOptions, '');
             closeButton.classList.add('delete');
         });
+        // Appel de la fonction SearchEngine pour afficher toutes les recettes
+        const filteredRecipes = SearchEngine(recipes, '', [], [], []);
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
+        updateTotalRecipes();
     });
 });
 
@@ -147,6 +161,11 @@ closeAppliance.forEach(closeButton => {
             filterOptions(applianceOptions, '');
             closeButton.classList.add('delete');
         });
+        // Appel de la fonction SearchEngine pour afficher toutes les recettes
+        const filteredRecipes = SearchEngine(recipes, '', [], [], []);
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
+        updateTotalRecipes();
     });
 });
 
@@ -159,6 +178,11 @@ closeUstensils.forEach(closeButton => {
             filterOptions(ustensilsOptions, '');
             closeButton.classList.add('delete');
         });
+        // Appel de la fonction SearchEngine pour afficher toutes les recettes
+        const filteredRecipes = SearchEngine(recipes, '', [], [], []);
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
+        updateTotalRecipes();
     });
 });
 

@@ -1727,8 +1727,6 @@ const recipes = [
     }
 ];
 
-
-
 // Code
 const valeur = "concombre";
 const filteredRecipes1 = [];
@@ -1742,31 +1740,33 @@ if (valeur.length > 3) {
         if (name.toLowerCase().includes(valeur) || description.toLowerCase().includes(valeur)) {
             filteredRecipes1.push(recipes[i]);
         } else {
-            for (const ingredient of ingredients) {
-                if (ingredient.ingredient.toLowerCase().includes(valeur)) {
+            let j = 0;
+            while (j < ingredients.length) {
+                if (ingredients[j].ingredient.toLowerCase().includes(valeur)) {
                     filteredRecipes1.push(recipes[i]);
                     break;
                 }
+                j++;
             }
         }
         i++;
-        console.log("Résultat de la première approche :", filteredRecipes1);
     }
 }
 
 if (valeur.length > 1) {
-    recipes.forEach(recipe => {
+    recipes.filter(recipe => {
         const { name, ingredients, description } = recipe;
-
         if (name.toLowerCase().includes(valeur) || description.toLowerCase().includes(valeur) || ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(valeur))) {
             filteredRecipes2.push(recipe);
         }
     });
-    console.log("Résultat de la deuxième approche :", filteredRecipes2);
 }
 
 const result1 = filteredRecipes1;
 const result2 = filteredRecipes2;
+
+console.log("Valeur de result1 :", result1);
+console.log("Valeur de result2 :", result2);
 
 if (JSON.stringify(result1) === JSON.stringify(result2)) {
     console.log("Les deux approches produisent les mêmes résultats.");

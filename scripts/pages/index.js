@@ -1,46 +1,56 @@
-import { recipes } from '../../data/recipes.js';
-import { createCardHTML } from '../templates/card.js';
 import { cardDetails } from '../models/data-card.js';
+import { createCardHTML } from '../templates/card.js';
+import { SearchEngine } from '../utils/searchEngine.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const cardsContainer = document.getElementById('cardsContainer');
-    const searchInput = document.getElementById('searchInput');
-    const totalRecipesElement = document.getElementById('totalRecipes');
+let selectedIngredients = [];
+let selectedAppliances = [];
+let selectedUstensils = [];
+let currentSearchText = ''; // Variable pour stocker la recherche principale
 
-    // Fonction de filtrage des recettes en fonction de la recherche
-    const filterRecipes = (searchTerm) => {
-        return cardDetails.filter(recipe =>
-            recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTerm.toLowerCase())) ||
-            recipe.description.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    };
+const searchBar = document.getElementById('searchInput');
+const cardsContainer = document.getElementById('cardsContainer');
+const totalRecipesElement = document.getElementById('totalRecipes');
 
-    // Met à jour les cartes lors de la saisie dans la barre de recherche
-    const updateRecipeCards = () => {
-        const searchTerm = searchInput.value.trim();
-        const filteredRecipes = filterRecipes(searchTerm);
+// Fonction de filtrage des recettes en fonction de la recherche
+const filterRecipes = () => {
+    const searchTerm = currentSearchText.trim().toLowerCase(); // Utilisation de la recherche principale
+    // Appel de la fonction SearchEngine avec les paramètres appropriés
+    const filteredRecipes = SearchEngine(cardDetails, searchTerm, selectedIngredients, selectedAppliances, selectedUstensils);
+    return filteredRecipes;
+};
 
-        // Affiche le nombre total de recettes trouvées
-        const totalRecipes = filteredRecipes.length;
-        totalRecipesElement.textContent = `${totalRecipes} recettes`;
+// Mise à jour des cartes lors de la saisie dans la barre de recherche
+const updateRecipeCards = () => {
+    const filteredRecipes = filterRecipes();
 
-        // Génère le HTML des cartes et ajoute au conteneur
-        cardsContainer.innerHTML = '';
-        filteredRecipes.forEach((recipe) => {
-            const cardHTML = createCardHTML(recipe);
-            cardsContainer.innerHTML += cardHTML;
-        });
-    };
-
-    searchInput.addEventListener('input', updateRecipeCards);
-
-    // Au chargement initial, affiche toutes les recettes
-    const totalRecipes = cardDetails.length;
+    // Affiche le nombre total de recettes trouvées
+    const totalRecipes = filteredRecipes.length;
     totalRecipesElement.textContent = `${totalRecipes} recettes`;
 
-    cardDetails.forEach((recipe) => {
-        const cardHTML = createCardHTML(recipe);
+    // Génère le HTML des cartes et ajoute au conteneur
+    cardsContainer.innerHTML = '';
+    let i = 0;
+    while (i < filteredRecipes.length) {
+        const cardHTML = createCardHTML(filteredRecipes[i]);
         cardsContainer.innerHTML += cardHTML;
-    });
+        i++;
+    }
+};
+
+// Gestionnaire d'événements pour surveiller les changements dans la barre de recherche
+searchBar.addEventListener('input', function () {
+    currentSearchText = searchBar.value.toLowerCase().trim();
+    filterRecipes(); // Mise à jour du filtre principal
+    updateRecipeCards();
 });
+
+// Au chargement initial, affiche toutes les recettes
+const totalRecipes = cardDetails.length;
+totalRecipesElement.textContent = `${totalRecipes} recettes`;
+
+let j = 0;
+while (j < cardDetails.length) {
+    const cardHTML = createCardHTML(cardDetails[j]);
+    cardsContainer.innerHTML += cardHTML;
+    j++;
+}

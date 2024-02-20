@@ -1,5 +1,6 @@
 import { cardDetails } from '../models/data-card.js';
 import { createCardHTML } from '../templates/card.js';
+import { SearchEngine } from '../utils/searchEngine.js';
 
 // Sélection des éléments du DOM
 const recipeCardsContainer = document.querySelector('#cardsContainer');
@@ -11,6 +12,7 @@ const applianceOptions = document.querySelectorAll('#appliancesList option');
 const ustensilsOptions = document.querySelectorAll('#ustensilsList option');
 const selectContainer = document.querySelector('.select-option');
 const totalRecipesElement = document.getElementById('totalRecipes');
+
 
 const selectedIngredients = [];
 const selectedAppliances = [];
@@ -61,7 +63,7 @@ function updateTotalRecipesCount() {
     totalRecipesElement.textContent = `${totalRecipesCount} recettes`;
 }
 
-// Utilisez la fonction createCardHTML pour générer le HTML de la carte de recette
+// Fonction createCardHTML pour générer le HTML de la carte de recette
 function updateRecipeDisplay(recipes) {
     recipeCardsContainer.innerHTML = ''; // Vide le conteneur des cartes
 
@@ -76,7 +78,7 @@ function updateRecipeDisplay(recipes) {
     }
 }
 
-// Ajoutez des écouteurs d'événements aux options des filtres
+// Écouteurs d'événements aux options des filtres
 ingredientsOptions.forEach(option => {
     option.addEventListener('click', function () {
         optionSelect(option, selectedIngredients);
@@ -95,7 +97,61 @@ ustensilsOptions.forEach(option => {
     });
 });
 
-// Mettre à jour les options sélectionnées dans la fonction optionSelect
+function filterRecipes(text) {
+    let searchText = text.trim().toLowerCase();
+
+    // Si la barre de recherche est vide mais qu'il y a des filtres sélectionnés, filtrez les recettes en fonction des filtres
+    if (!searchText && (selectedIngredients.length > 0 || selectedAppliances.length > 0 || selectedUstensils.length > 0)) {
+        searchText = '';
+    }
+
+    // Filtre les recettes en fonction du texte de recherche et des filtres sélectionnés
+    const filteredRecipes = SearchEngine(cardDetails, searchText, selectedIngredients, selectedAppliances, selectedUstensils);
+
+    // Affiche un message d'erreur si aucune recette n'est trouvée
+    if (filteredRecipes.length === 0) {
+        const errorMessageElement = document.createElement('p');
+        errorMessageElement.textContent = `Aucune recette ne correspond à vos critères de recherche.`;
+        errorMessageElement.classList.add('error-message');
+        recipeCardsContainer.innerHTML = '';
+        recipeCardsContainer.appendChild(errorMessageElement);
+    } else {
+        // Mise à jour de l'affichage des recettes
+        updateRecipeDisplay(filteredRecipes);
+    }
+
+    // Mise à jour de l'affichage des recettes
+    updateRecipeDisplay(filteredRecipes);
+
+    // Mise à jour du nombre total de recettes
+    updateTotalRecipesCount();
+}
+
+// Appeler la fonction filterRecipes lorsque la recherche dans la barre de recherche est modifiée
+searchBar.addEventListener('input', function () {
+    filterRecipes(searchBar.value);
+});
+
+// Écouteurs d'événements aux options des filtres
+ingredientsOptions.forEach(option => {
+    option.addEventListener('click', function () {
+        optionSelect(option, selectedIngredients);
+    });
+});
+
+applianceOptions.forEach(option => {
+    option.addEventListener('click', function () {
+        optionSelect(option, selectedAppliances);
+    });
+});
+
+ustensilsOptions.forEach(option => {
+    option.addEventListener('click', function () {
+        optionSelect(option, selectedUstensils);
+    });
+});
+
+// Mise à jour des options sélectionnées dans la fonction optionSelect
 function optionSelect(option, selectedItems) {
     if (option.value !== 'default') {
         const optionText = option.text;
@@ -105,11 +161,11 @@ function optionSelect(option, selectedItems) {
         }
         selectedItems.push(optionText);
 
-        // Créez un élément HTML pour afficher l'option sélectionnée
+        // Crée un élément HTML pour afficher l'option sélectionnée
         const button = document.createElement('p');
         button.textContent = optionText;
 
-        // Ajoutez un bouton de suppression pour permettre de supprimer l'option sélectionnée
+        // Ajoute un bouton de suppression pour permettre de supprimer l'option sélectionnée
         const removeButton = document.createElement('button');
         removeButton.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
         removeButton.addEventListener('click', function () {
@@ -117,12 +173,25 @@ function optionSelect(option, selectedItems) {
             if (itemIndex !== -1) {
                 selectedItems.splice(itemIndex, 1);
             }
-            // Supprimez l'option sélectionnée de l'interface utilisateur
+            // Supprime l'option sélectionnée de l'interface utilisateur
             selectContainer.removeChild(button);
             console.log('Option sélectionnée retirée de selectContainer:', button);
 
-            // Mettez à jour les recettes filtrées
-            filterRecipes();
+            // Désélectionne l'option correspondante dans la liste déroulante
+            const optionToRemove = Array.from(selectContainer.children).find(child => child.textContent === optionText);
+            if (optionToRemove) {
+                const select = optionToRemove.closest('select');
+                if (select) {
+                    select.value = 'default';
+                }
+            }
+
+            // Met à jour le style de l'option dans la liste déroulante
+            option.style.backgroundColor = 'transparent';
+
+            // Met à jour les recettes filtrées et le nombre total de recettes
+            filterRecipes(searchBar.value);
+            updateTotalRecipesCount();
             console.log('Options sélectionnées:', selectedItems);
         });
 
@@ -130,39 +199,14 @@ function optionSelect(option, selectedItems) {
         selectContainer.appendChild(button);
         console.log('Option sélectionnée ajoutée à selectContainer:', button);
 
-        // Mettez à jour l'apparence de l'option sélectionnée dans le menu déroulant
+        // Met à jour le style de l'option dans la liste déroulante
         option.style.backgroundColor = '#FFD15B';
 
-        // Mettez à jour les recettes filtrées et le nombre total de recettes
-        filterRecipes();
+        // Ajoute la classe "selected" à l'option dans la liste déroulante
+        option.classList.add('selected');
+
+        // Met à jour les recettes filtrées et le nombre total de recettes
+        filterRecipes(searchBar.value);
         updateTotalRecipesCount();
     }
-}
-
-function filterRecipes() {
-    // Filtrer les recettes en fonction du terme de recherche et des filtres sélectionnés
-    const filteredRecipes = recipes.filter(recipe => {
-        const { name, ingredients, description, appliance, ustensils } = recipe;
-        const searchTermMatch = name.toLowerCase().includes(searchTerm) || description.toLowerCase().includes(searchTerm) || ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTerm));
-        const ingredientMatch = selectedIngredients.every(selectedIngredient => ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(selectedIngredient.toLowerCase())));
-        const applianceMatch = selectedAppliances.length === 0 || selectedAppliances.includes(appliance.toLowerCase());
-        const ustensilsMatch = selectedUstensils.length === 0 || selectedUstensils.some(selectedUstensil => ustensils.includes(selectedUstensil.toLowerCase()));
-
-        return searchTermMatch && ingredientMatch && applianceMatch && ustensilsMatch;
-    });
-
-    // Afficher un message d'erreur si aucune recette n'est trouvée
-    if (filteredRecipes.length === 0) {
-        const errorMessageElement = document.createElement('p');
-        errorMessageElement.textContent = `Aucune recette ne correspond à vos critères de recherche.`;
-        errorMessageElement.classList.add('error-message');
-        recipeCardsContainer.innerHTML = '';
-        recipeCardsContainer.appendChild(errorMessageElement);
-    }
-
-    // Mettre à jour l'affichage des recettes
-    updateRecipeDisplay(filteredRecipes);
-
-    // Mettre à jour le nombre total de recettes
-    updateTotalRecipesCount();
 }

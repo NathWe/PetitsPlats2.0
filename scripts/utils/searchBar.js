@@ -1,11 +1,20 @@
 import { cardDetails } from '../models/data-card.js';
 import { createCardHTML } from '../templates/card.js';
+import { SearchEngine } from '../utils/searchEngine.js';
 
 // Sélection des éléments du DOM
-const searchBar = document.querySelector('.research_text');
+export const searchBar = document.querySelector('.research_text');
 const recipeCardsContainer = document.querySelector('#cardsContainer');
 const searchForm = document.querySelector('.research');
 const closeButton = document.querySelector('.closebutton-delete');
+const selectContainer = document.querySelector('.select-option');
+const removeButton = document.createElement('button');
+let currentSearchText = '';
+
+
+let selectedIngredients = [];
+let selectedAppliances = [];
+let selectedUstensils = [];
 
 
 function addCloseButton() {
@@ -35,9 +44,10 @@ searchBar.addEventListener('input', function () {
         // Masquer la croix de suppression
         closeButton.style.display = 'none';
     }
+    // Appel de la fonction SearchEngine avec les paramètres appropriés
+    currentSearchText = searchBar.value.toLowerCase().trim();
+    filterRecipes();
 });
-
-
 
 // Gestionnaire d'événements pour la soumission du formulaire de recherche
 searchForm.addEventListener('submit', (event) => {
@@ -64,9 +74,10 @@ searchForm.addEventListener('submit', (event) => {
     } else { // Si le terme de recherche a une longueur inférieure ou égale à 3 caractères
         updateRecipeDisplay(cardDetails);
     }
+    filterChanged();
 });
 
-// Utilisez la fonction createCardHTML pour générer le HTML de la carte de recette
+// Fonction createCardHTML pour générer le HTML de la carte de recette
 function updateRecipeDisplay(recipes) {
     recipeCardsContainer.innerHTML = ''; // Vide le conteneur des cartes
 
@@ -76,4 +87,35 @@ function updateRecipeDisplay(recipes) {
         cardElement.innerHTML = cardHTML; // Convertit la chaîne HTML en élément
         recipeCardsContainer.appendChild(cardElement);
     });
+}
+
+function updateRecipes() {
+    const filteredRecipes = SearchEngine(cardDetails, searchBar.value, selectedIngredients, selectedAppliances, selectedUstensils);
+    updateRecipeDisplay(filteredRecipes);
+}
+
+removeButton.addEventListener('click', function () {
+    // Supprime l'option sélectionnée de l'interface utilisateur
+    selectContainer.removeChild(button);
+    console.log('Option sélectionnée retirée de selectContainer:', button);
+
+    // Mise à jour des recettes filtrées
+    selectedIngredients = selectedIngredients.filter(item => item !== optionText);
+    updateRecipes();
+    console.log('Options sélectionnées:', selectedIngredients);
+});
+
+searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    updateRecipes();
+});
+
+function filterChanged() {
+    const filteredRecipes = SearchEngine(cardDetails, searchBar.value.trim().toLowerCase(), selectedIngredients, selectedAppliances, selectedUstensils);
+    updateRecipeDisplay(filteredRecipes);
+}
+
+function filterRecipes() {
+    const filteredRecipes = SearchEngine(cardDetails, currentSearchText, selectedIngredients, selectedAppliances, selectedUstensils);
+    updateRecipeDisplay(filteredRecipes);
 }
