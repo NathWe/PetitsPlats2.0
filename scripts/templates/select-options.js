@@ -1,5 +1,5 @@
 import { cardDetails } from '../models/data-card.js';
-import { SearchEngine } from '../utils/searchEngine.js';
+
 
 const labelIngredient = document.querySelector('#ingredientsList');
 const labelUstensils = document.querySelector('#ustensilsList');
@@ -11,7 +11,6 @@ const uniqueAppliance = [];
 
 
 const filterButtons = document.querySelectorAll('.filterBtn');
-const filter = document.querySelector('.filterList');
 
 filterButtons.forEach(filterButton => {
     filterButton.addEventListener('click', () => {
@@ -29,7 +28,7 @@ filterButtons.forEach(filterButton => {
 });
 
 
-// Ingrédients pour liste déroulante Ingrédients
+// Elements pour liste déroulante Ingrédients
 cardDetails.forEach(label => {
     label.ingredients.forEach(ingredient => {
         if (!uniqueIngredients.includes(ingredient.ingredient)) {
@@ -44,7 +43,7 @@ uniqueIngredients.forEach(ingredient => {
     labelIngredient.appendChild(option);
 });
 
-// Ingrédients pour liste déroulante Ustensils
+// Elements pour liste déroulante Ustensils
 cardDetails.forEach(label => {
     label.ustensils.forEach(ustensils => {
         if (!uniqueUstensils.includes(ustensils)) {
@@ -60,7 +59,7 @@ uniqueUstensils.forEach(ustensils => {
     labelUstensils.appendChild(option);
 });
 
-// Ingrédients pour liste déroulante Appareils
+// Elements pour liste déroulante Appareils
 cardDetails.forEach(label => {
     if (!uniqueAppliance.includes(label.appliance)) {
         uniqueAppliance.push(label.appliance);

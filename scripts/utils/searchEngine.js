@@ -1,7 +1,7 @@
 export function SearchEngine(recipes, text, ingredients, appliances, ustensils, searchTextIngredients, searchTextAppliance, searchTextUstensils) {
     let filteredRecipes = recipes;
 
-    // Filtrer les recettes par le texte libre
+    // Filtre les recettes par le texte libre
     if (text) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             recipe.name.toLowerCase().includes(text.toLowerCase()) ||
@@ -10,7 +10,7 @@ export function SearchEngine(recipes, text, ingredients, appliances, ustensils, 
         );
     }
 
-    // Filtrer les recettes par les ingrédients sélectionnés
+    // Filtre les recettes par les ingrédients sélectionnés
     if (ingredients.length > 0) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             ingredients.every(selectedIngredient =>
@@ -21,14 +21,14 @@ export function SearchEngine(recipes, text, ingredients, appliances, ustensils, 
         );
     }
 
-    // Filtrer les recettes par les appareils sélectionnés
+    // Filtre les recettes par les appareils sélectionnés
     if (appliances.length > 0) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             appliances.includes(recipe.appliance.toLowerCase())
         );
     }
 
-    // Filtrer les recettes par les ustensiles sélectionnés
+    // Filtre les recettes par les ustensiles sélectionnés
     if (ustensils.length > 0) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             ustensils.some(selectedUstensil =>
@@ -39,21 +39,21 @@ export function SearchEngine(recipes, text, ingredients, appliances, ustensils, 
         );
     }
 
-    // Filtrer les recettes par le texte de la recherche d'ingrédients
+    // Filtre les recettes par le texte de la recherche d'ingrédients
     if (searchTextIngredients) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTextIngredients))
         );
     }
 
-    // Filtrer les recettes par le texte de la recherche d'appareils
+    // Filtre les recettes par le texte de la recherche d'appareils
     if (searchTextAppliance) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             recipe.appliance.toLowerCase().includes(searchTextAppliance)
         );
     }
 
-    // Filtrer les recettes par le texte de la recherche d'ustensiles
+    // Filtre les recettes par le texte de la recherche d'ustensiles
     if (searchTextUstensils) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(searchTextUstensils))

@@ -35,7 +35,7 @@ function updateRecipeCards(clickedElement) {
     updateTotalRecipes();
 }
 
-// Ajout d' écouteurs d'événements de clic pour chaque option de recherche
+// Ajout d'écouteurs d'événements de clic pour chaque option de recherche
 ingredientsOptions.forEach(option => {
     option.addEventListener('click', () => {
         updateRecipeCards(option.textContent);

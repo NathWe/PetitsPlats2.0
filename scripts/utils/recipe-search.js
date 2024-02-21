@@ -100,7 +100,7 @@ ustensilsOptions.forEach(option => {
 function filterRecipes(text) {
     let searchText = text.trim().toLowerCase();
 
-    // Si la barre de recherche est vide mais qu'il y a des filtres sélectionnés, filtrez les recettes en fonction des filtres
+    // Si la barre de recherche est vide mais qu'il y a des filtres sélectionnés, filtre les recettes en fonction des filtres
     if (!searchText && (selectedIngredients.length > 0 || selectedAppliances.length > 0 || selectedUstensils.length > 0)) {
         searchText = '';
     }
@@ -127,7 +127,7 @@ function filterRecipes(text) {
     updateTotalRecipesCount();
 }
 
-// Appeler la fonction filterRecipes lorsque la recherche dans la barre de recherche est modifiée
+// Appel de la fonction filterRecipes lorsque la recherche dans la barre de recherche est modifiée
 searchBar.addEventListener('input', function () {
     filterRecipes(searchBar.value);
 });

@@ -23,7 +23,7 @@ function addCloseButton() {
         searchBar.value = '';
         closeButton.style.display = 'none';
 
-        // Déclencher un événement de saisie pour simuler une nouvelle recherche
+        // Déclenche un événement de saisie pour simuler une nouvelle recherche
         var event = new Event('input', {
             bubbles: true,
             cancelable: true,
@@ -36,12 +36,12 @@ addCloseButton();
 
 // Gestionnaire d'événements pour surveiller les changements dans la barre de recherche
 searchBar.addEventListener('input', function () {
-    // Vérifier si la barre de recherche contient du texte
+    // Vérifie si la barre de recherche contient du texte
     if (searchBar.value.trim().length > 0) {
-        // Afficher la croix de suppression
+        // Affiche la croix de suppression
         closeButton.style.display = 'inline';
     } else {
-        // Masquer la croix de suppression
+        // Masque la croix de suppression
         closeButton.style.display = 'none';
     }
     // Appel de la fonction SearchEngine avec les paramètres appropriés
