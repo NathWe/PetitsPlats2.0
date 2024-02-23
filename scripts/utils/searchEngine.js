@@ -1,8 +1,8 @@
-export function SearchEngine(recipes, text, ingredients, appliances, ustensils, searchTextIngredients, searchTextAppliance, searchTextUstensils) {
+export function SearchEngine(recipes, text, ingredients, appliances, ustensils) {
     let filteredRecipes = recipes;
 
     // Filtre les recettes par le texte libre
-    if (text) {
+    if (text && text.length >= 3) {
         filteredRecipes = filteredRecipes.filter(recipe =>
             recipe.name.toLowerCase().includes(text.toLowerCase()) ||
             recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(text.toLowerCase())) ||
@@ -36,27 +36,6 @@ export function SearchEngine(recipes, text, ingredients, appliances, ustensils, 
                     ustensil.toLowerCase().includes(selectedUstensil.toLowerCase())
                 )
             )
-        );
-    }
-
-    // Filtre les recettes par le texte de la recherche d'ingrédients
-    if (searchTextIngredients) {
-        filteredRecipes = filteredRecipes.filter(recipe =>
-            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTextIngredients))
-        );
-    }
-
-    // Filtre les recettes par le texte de la recherche d'appareils
-    if (searchTextAppliance) {
-        filteredRecipes = filteredRecipes.filter(recipe =>
-            recipe.appliance.toLowerCase().includes(searchTextAppliance)
-        );
-    }
-
-    // Filtre les recettes par le texte de la recherche d'ustensiles
-    if (searchTextUstensils) {
-        filteredRecipes = filteredRecipes.filter(recipe =>
-            recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(searchTextUstensils))
         );
     }
 

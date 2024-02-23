@@ -45,10 +45,18 @@ main {
 
 .logo {
   position: absolute;
-  width: 207px;
+  width: 180px;
   height: 25.26px;
   top: 51px;
   left: 69px;
+}
+
+.logo2 {
+  position: absolute;
+  width: 22.05px;
+  height: 21.25px;
+  top: 54.78px;
+  left: 253.95px;
 }
 
 header > h1 {
@@ -158,7 +166,6 @@ header > h1 {
   color: #1b1b1b;
   margin-left: auto;
   display: flex;
-  align-items: center;
 }
 
 .filter {

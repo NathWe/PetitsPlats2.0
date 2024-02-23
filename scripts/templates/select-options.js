@@ -1,6 +1,5 @@
 import { cardDetails } from '../models/data-card.js';
 
-
 const labelIngredient = document.querySelector('#ingredientsList');
 const labelUstensils = document.querySelector('#ustensilsList');
 const labelAppliance = document.querySelector('#appliancesList');
@@ -8,7 +7,6 @@ const labelAppliance = document.querySelector('#appliancesList');
 const uniqueIngredients = [];
 const uniqueUstensils = [];
 const uniqueAppliance = [];
-
 
 const filterButtons = document.querySelectorAll('.filterBtn');
 
@@ -27,14 +25,23 @@ filterButtons.forEach(filterButton => {
     });
 });
 
-
-// Elements pour liste déroulante Ingrédients
+// Créer les options pour les listes déroulantes Ingrédients, Ustensiles et Appareils
 cardDetails.forEach(label => {
     label.ingredients.forEach(ingredient => {
         if (!uniqueIngredients.includes(ingredient.ingredient)) {
             uniqueIngredients.push(ingredient.ingredient);
         }
     });
+
+    label.ustensils.forEach(ustensils => {
+        if (!uniqueUstensils.includes(ustensils)) {
+            uniqueUstensils.push(ustensils);
+        }
+    });
+
+    if (!uniqueAppliance.includes(label.appliance)) {
+        uniqueAppliance.push(label.appliance);
+    }
 });
 
 uniqueIngredients.forEach(ingredient => {
@@ -43,27 +50,11 @@ uniqueIngredients.forEach(ingredient => {
     labelIngredient.appendChild(option);
 });
 
-// Elements pour liste déroulante Ustensils
-cardDetails.forEach(label => {
-    label.ustensils.forEach(ustensils => {
-        if (!uniqueUstensils.includes(ustensils)) {
-            uniqueUstensils.push(ustensils);
-        }
-    });
-});
-
 uniqueUstensils.forEach(ustensils => {
     const formattedUstensils = ustensils.charAt(0).toUpperCase() + ustensils.slice(1);
     const option = document.createElement('option');
     option.textContent = formattedUstensils;
     labelUstensils.appendChild(option);
-});
-
-// Elements pour liste déroulante Appareils
-cardDetails.forEach(label => {
-    if (!uniqueAppliance.includes(label.appliance)) {
-        uniqueAppliance.push(label.appliance);
-    }
 });
 
 uniqueAppliance.forEach(appliance => {

@@ -11,12 +11,10 @@ const searchBar = document.getElementById('searchInput');
 const cardsContainer = document.getElementById('cardsContainer');
 const totalRecipesElement = document.getElementById('totalRecipes');
 
-// Fonction de filtrage des recettes en fonction de la recherche
+// Fonction pour filtrer les recettes en fonction de la recherche
 const filterRecipes = () => {
     const searchTerm = currentSearchText.trim().toLowerCase(); // Utilisation de la recherche principale
-    // Appel de la fonction SearchEngine avec les paramètres appropriés
-    const filteredRecipes = SearchEngine(cardDetails, searchTerm, selectedIngredients, selectedAppliances, selectedUstensils);
-    return filteredRecipes;
+    return SearchEngine(cardDetails, searchTerm, selectedIngredients, selectedAppliances, selectedUstensils);
 };
 
 // Mise à jour des cartes lors de la saisie dans la barre de recherche
@@ -24,33 +22,19 @@ const updateRecipeCards = () => {
     const filteredRecipes = filterRecipes();
 
     // Affiche le nombre total de recettes trouvées
-    const totalRecipes = filteredRecipes.length;
-    totalRecipesElement.textContent = `${totalRecipes} recettes`;
+    totalRecipesElement.textContent = `${filteredRecipes.length} recettes`;
 
     // Génère le HTML des cartes et ajoute au conteneur
-    cardsContainer.innerHTML = '';
-    let i = 0;
-    while (i < filteredRecipes.length) {
-        const cardHTML = createCardHTML(filteredRecipes[i]);
-        cardsContainer.innerHTML += cardHTML;
-        i++;
-    }
+    cardsContainer.innerHTML = filteredRecipes.map(createCardHTML).join('');
 };
 
 // Gestionnaire d'événements pour surveiller les changements dans la barre de recherche
-searchBar.addEventListener('input', function () {
+searchBar.addEventListener('input', () => {
     currentSearchText = searchBar.value.toLowerCase().trim();
     filterRecipes(); // Mise à jour du filtre principal
     updateRecipeCards();
 });
 
 // Au chargement initial, affiche toutes les recettes
-const totalRecipes = cardDetails.length;
-totalRecipesElement.textContent = `${totalRecipes} recettes`;
-
-let j = 0;
-while (j < cardDetails.length) {
-    const cardHTML = createCardHTML(cardDetails[j]);
-    cardsContainer.innerHTML += cardHTML;
-    j++;
-}
+totalRecipesElement.textContent = `${cardDetails.length} recettes`;
+cardsContainer.innerHTML = cardDetails.map(createCardHTML).join('');
