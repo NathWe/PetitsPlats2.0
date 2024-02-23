@@ -1,27 +1,22 @@
 import { cardDetails } from '../models/data-card.js';
-import { createCardHTML } from '../templates/card.js';
 import { SearchEngine } from '../utils/searchEngine.js';
+import { updateRecipeDisplay } from '../utils/recipeDisplayUtils.js';
 
 // Sélection des éléments du DOM
 const recipeCardsContainer = document.querySelector('#cardsContainer');
 const searchForm = document.querySelector('.research');
 const searchBar = document.querySelector('.research_text');
-const closeDelete = document.querySelectorAll('.closebutton-delete');
 const ingredientsOptions = document.querySelectorAll('#ingredientsList option');
 const applianceOptions = document.querySelectorAll('#appliancesList option');
 const ustensilsOptions = document.querySelectorAll('#ustensilsList option');
 const selectContainer = document.querySelector('.select-option');
 const totalRecipesElement = document.getElementById('totalRecipes');
 
-
 const selectedIngredients = [];
 const selectedAppliances = [];
 const selectedUstensils = [];
 
-const recipes = cardDetails;
-
-let searchTerm = '';
-let closeButton = null; // Déclaration de closeButton en dehors de la fonction
+let closeButton = null;
 
 function addCloseButton() {
     closeButton = document.createElement('button');
@@ -56,26 +51,10 @@ searchForm.addEventListener('submit', (event) => {
     filterRecipes();
 });
 
-
 // Fonction pour mettre à jour le nombre total de recettes
 function updateTotalRecipesCount() {
     const totalRecipesCount = document.querySelectorAll('.recipe-card').length;
     totalRecipesElement.textContent = `${totalRecipesCount} recettes`;
-}
-
-// Fonction createCardHTML pour générer le HTML de la carte de recette
-function updateRecipeDisplay(recipes) {
-    recipeCardsContainer.innerHTML = ''; // Vide le conteneur des cartes
-
-    let i = 0;
-    while (i < recipes.length) {
-        const card = recipes[i];
-        const cardHTML = createCardHTML(card);
-        const cardElement = document.createElement('div');
-        cardElement.innerHTML = cardHTML; // Convertit la chaîne HTML en élément
-        recipeCardsContainer.appendChild(cardElement);
-        i++;
-    }
 }
 
 // Écouteurs d'événements aux options des filtres
@@ -97,6 +76,7 @@ ustensilsOptions.forEach(option => {
     });
 });
 
+// Fonction pour filtrer les recettes en fonction du texte de recherche
 function filterRecipes(text) {
     let searchText = text.trim().toLowerCase();
 
@@ -109,9 +89,9 @@ function filterRecipes(text) {
     const filteredRecipes = SearchEngine(cardDetails, searchText, selectedIngredients, selectedAppliances, selectedUstensils);
 
     // Affiche un message d'erreur si aucune recette n'est trouvée
-    if (filteredRecipes.length === 0) {
+    if (filteredRecipes.length === 0 && (searchText.length > 0 || selectedIngredients.length > 0 || selectedAppliances.length > 0 || selectedUstensils.length > 0)) {
         const errorMessageElement = document.createElement('p');
-        errorMessageElement.textContent = `Aucune recette ne correspond à vos critères de recherche.`;
+        errorMessageElement.textContent = `Aucune recette ne contient ‘${searchText}’. Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
         errorMessageElement.classList.add('error-message');
         recipeCardsContainer.innerHTML = '';
         recipeCardsContainer.appendChild(errorMessageElement);
@@ -119,9 +99,6 @@ function filterRecipes(text) {
         // Mise à jour de l'affichage des recettes
         updateRecipeDisplay(filteredRecipes);
     }
-
-    // Mise à jour de l'affichage des recettes
-    updateRecipeDisplay(filteredRecipes);
 
     // Mise à jour du nombre total de recettes
     updateTotalRecipesCount();
@@ -132,24 +109,6 @@ searchBar.addEventListener('input', function () {
     filterRecipes(searchBar.value);
 });
 
-// Écouteurs d'événements aux options des filtres
-ingredientsOptions.forEach(option => {
-    option.addEventListener('click', function () {
-        optionSelect(option, selectedIngredients);
-    });
-});
-
-applianceOptions.forEach(option => {
-    option.addEventListener('click', function () {
-        optionSelect(option, selectedAppliances);
-    });
-});
-
-ustensilsOptions.forEach(option => {
-    option.addEventListener('click', function () {
-        optionSelect(option, selectedUstensils);
-    });
-});
 
 // Mise à jour des options sélectionnées dans la fonction optionSelect
 function optionSelect(option, selectedItems) {

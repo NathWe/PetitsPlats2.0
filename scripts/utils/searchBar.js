@@ -1,121 +1,70 @@
 import { cardDetails } from '../models/data-card.js';
-import { createCardHTML } from '../templates/card.js';
 import { SearchEngine } from '../utils/searchEngine.js';
+import { updateRecipeDisplay } from '../utils/recipeDisplayUtils.js';
 
 // Sélection des éléments du DOM
 export const searchBar = document.querySelector('.research_text');
-const recipeCardsContainer = document.querySelector('#cardsContainer');
 const searchForm = document.querySelector('.research');
 const closeButton = document.querySelector('.closebutton-delete');
-const selectContainer = document.querySelector('.select-option');
-const removeButton = document.createElement('button');
 let currentSearchText = '';
-
-
 let selectedIngredients = [];
 let selectedAppliances = [];
 let selectedUstensils = [];
 
-
+// Fonction pour ajouter un bouton de fermeture à la barre de recherche
 function addCloseButton() {
     closeButton.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
+    closeButton.style.display = 'none'; // Masquer la croix par défaut
     closeButton.addEventListener('click', function () {
         searchBar.value = '';
         closeButton.style.display = 'none';
-
-        // Déclencher un événement de saisie pour simuler une nouvelle recherche
         var event = new Event('input', {
             bubbles: true,
             cancelable: true,
         });
         searchBar.dispatchEvent(event);
     });
-}
-// Appel de la fonction pour ajouter le bouton de fermeture
-addCloseButton();
+    searchBar.parentNode.appendChild(closeButton); // Ajouter la croix à l'élément parent de la barre de recherche
 
-// Gestionnaire d'événements pour surveiller les changements dans la barre de recherche
-searchBar.addEventListener('input', function () {
-    // Vérifier si la barre de recherche contient du texte
-    if (searchBar.value.trim().length > 0) {
-        // Afficher la croix de suppression
-        closeButton.style.display = 'inline';
-    } else {
-        // Masquer la croix de suppression
-        closeButton.style.display = 'none';
-    }
-    // Appel de la fonction SearchEngine avec les paramètres appropriés
-    currentSearchText = searchBar.value.toLowerCase().trim();
-    filterRecipes();
-});
+    // Gestionnaire d'événements pour surveiller les changements dans la barre de recherche
+    searchBar.addEventListener('input', function () {
+        currentSearchText = searchBar.value.toLowerCase().trim();
 
-// Gestionnaire d'événements pour la soumission du formulaire de recherche
-searchForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const searchTerm = searchBar.value.toLowerCase();
-    if (searchTerm.length > 3) {
-        const filteredRecipes = cardDetails.filter((recipe) => {
-            const { name, ingredients, description } = recipe;
-
-            // Vérifie si le nom, la description ou un ingrédient contient le terme de recherche
-            return name.toLowerCase().includes(searchTerm) || description.toLowerCase().includes(searchTerm) || ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTerm));
-        });
-        // Gestion des résultats de la recherche
-        if (filteredRecipes.length === 0) {
-            const errorMessageElement = document.createElement('div');
-            errorMessageElement.textContent = `Aucune recette ne contient '${searchTerm}'. Vous pouvez chercher «tarte aux pommes», «poisson», etc.`; // Message d'erreur
-            errorMessageElement.classList.add('error-message');
-            recipeCardsContainer.innerHTML = '';
-            recipeCardsContainer.appendChild(errorMessageElement);
+        // Afficher la croix dès qu'il y a du texte
+        if (currentSearchText.length > 0) {
+            closeButton.style.display = 'inline';
         } else {
-            updateRecipeDisplay(filteredRecipes);
+            closeButton.style.display = 'none';
         }
-    } else { // Si le terme de recherche a une longueur inférieure ou égale à 3 caractères
-        updateRecipeDisplay(cardDetails);
-    }
-    filterChanged();
-});
 
-// Fonction createCardHTML pour générer le HTML de la carte de recette
-function updateRecipeDisplay(recipes) {
-    recipeCardsContainer.innerHTML = ''; // Vide le conteneur des cartes
-
-    recipes.forEach(card => {
-        const cardHTML = createCardHTML(card);
-        const cardElement = document.createElement('div');
-        cardElement.innerHTML = cardHTML; // Convertit la chaîne HTML en élément
-        recipeCardsContainer.appendChild(cardElement);
+        if (currentSearchText.length >= 3 && currentSearchText.trim() !== '') {
+            filterRecipes();
+            updateRecipes();
+        }
     });
 }
 
-function updateRecipes() {
-    const filteredRecipes = SearchEngine(cardDetails, searchBar.value, selectedIngredients, selectedAppliances, selectedUstensils);
-    updateRecipeDisplay(filteredRecipes);
-}
-
-removeButton.addEventListener('click', function () {
-    // Supprime l'option sélectionnée de l'interface utilisateur
-    selectContainer.removeChild(button);
-    console.log('Option sélectionnée retirée de selectContainer:', button);
-
-    // Mise à jour des recettes filtrées
-    selectedIngredients = selectedIngredients.filter(item => item !== optionText);
-    updateRecipes();
-    console.log('Options sélectionnées:', selectedIngredients);
-});
-
-searchForm.addEventListener('submit', (event) => {
+// Gestionnaire d'événements pour la soumission du formulaire de recherche
+function handleSearchFormSubmit(event) {
     event.preventDefault();
+    filterRecipes();
     updateRecipes();
-});
-
-function filterChanged() {
-    const filteredRecipes = SearchEngine(cardDetails, searchBar.value.trim().toLowerCase(), selectedIngredients, selectedAppliances, selectedUstensils);
-    updateRecipeDisplay(filteredRecipes);
 }
 
+// Fonction pour filtrer les recettes en fonction du texte de recherche
 function filterRecipes() {
     const filteredRecipes = SearchEngine(cardDetails, currentSearchText, selectedIngredients, selectedAppliances, selectedUstensils);
     updateRecipeDisplay(filteredRecipes);
 }
+
+// Fonction pour mettre à jour les recettes
+function updateRecipes() {
+    const filteredRecipes = SearchEngine(cardDetails, currentSearchText, selectedIngredients, selectedAppliances, selectedUstensils);
+    updateRecipeDisplay(filteredRecipes);
+}
+
+// Appel de la fonction addCloseButton pour ajouter le bouton de fermeture
+addCloseButton();
+
+// Ajout d'un événement pour la soumission du formulaire de recherche
+searchForm.addEventListener('submit', handleSearchFormSubmit);

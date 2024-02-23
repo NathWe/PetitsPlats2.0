@@ -1732,6 +1732,16 @@ const valeur = "concombre";
 const filteredRecipes1 = [];
 const filteredRecipes2 = [];
 
+
+if (valeur.length > 3) {
+    recipes.filter(recipe => {
+        const { name, ingredients, description } = recipe;
+        if (name.toLowerCase().includes(valeur) || description.toLowerCase().includes(valeur) || ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(valeur))) {
+            filteredRecipes2.push(recipe);
+        }
+    });
+}
+
 if (valeur.length > 3) {
     let i = 0;
     while (i < recipes.length) {
@@ -1753,14 +1763,6 @@ if (valeur.length > 3) {
     }
 }
 
-if (valeur.length > 1) {
-    recipes.filter(recipe => {
-        const { name, ingredients, description } = recipe;
-        if (name.toLowerCase().includes(valeur) || description.toLowerCase().includes(valeur) || ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(valeur))) {
-            filteredRecipes2.push(recipe);
-        }
-    });
-}
 
 const result1 = filteredRecipes1;
 const result2 = filteredRecipes2;

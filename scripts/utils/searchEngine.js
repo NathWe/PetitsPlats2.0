@@ -1,4 +1,4 @@
-export function SearchEngine(recipes, text, ingredients, appliances, ustensils, searchTextIngredients, searchTextAppliance, searchTextUstensils) {
+export function SearchEngine(recipes, text, ingredients, appliances, ustensils) {
     let filteredRecipes = [];
 
     let i = 0;
@@ -50,26 +50,6 @@ export function SearchEngine(recipes, text, ingredients, appliances, ustensils, 
             }
         }
 
-        // Filtrer les recettes par le texte de la recherche d'ingrédients
-        if (searchTextIngredients) {
-            if (!recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchTextIngredients))) {
-                shouldAddRecipe = false;
-            }
-        }
-
-        // Filtrer les recettes par le texte de la recherche d'appareils
-        if (searchTextAppliance) {
-            if (!recipe.appliance.toLowerCase().includes(searchTextAppliance)) {
-                shouldAddRecipe = false;
-            }
-        }
-
-        // Filtrer les recettes par le texte de la recherche d'ustensiles
-        if (searchTextUstensils) {
-            if (!recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(searchTextUstensils))) {
-                shouldAddRecipe = false;
-            }
-        }
 
         // Si shouldAddRecipe est toujours true, ajouter la recette aux recettes filtrées
         if (shouldAddRecipe) {

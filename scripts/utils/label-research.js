@@ -1,6 +1,7 @@
 import { recipes } from '../../data/recipes.js';
 import { createCardHTML } from '../templates/card.js';
 import { SearchEngine } from '../utils/searchEngine.js';
+import { updateRecipeDisplay } from '../utils/recipeDisplayUtils.js';
 
 const ingredientsOptions = document.querySelectorAll('#ingredientsList option');
 const applianceOptions = document.querySelectorAll('#appliancesList option');
@@ -11,6 +12,44 @@ const ustensilsSearch = document.querySelectorAll('#ustensilsSearchInput');
 const closeAppliance = document.querySelectorAll('.closebutton-appliance')
 const closeIngredient = document.querySelectorAll('.closebutton-ingredients')
 const closeUstensils = document.querySelectorAll('.closebutton-ustensils')
+
+let selectedIngredients = [];
+let selectedAppliances = [];
+let selectedUstensils = [];
+
+
+// Fonction de filtrage des options
+function filterOptions(options, searchText) {
+    searchText = searchText.toLowerCase();
+
+    options.forEach(option => {
+        const optionText = option.textContent.toLowerCase();
+        if (optionText.includes(searchText)) {
+            option.style.display = '';
+        } else {
+            option.style.display = 'none';
+        }
+    });
+}
+
+// Ajout d' écouteurs d'événements de clic pour chaque option de recherche
+ingredientsOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        updateRecipeCards(option.textContent);
+    });
+});
+
+applianceOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        updateRecipeCards(option.textContent);
+    });
+});
+
+ustensilsOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        updateRecipeCards(option.textContent);
+    });
+});
 
 function updateRecipeCards(clickedElement) {
     if (!clickedElement) return;
@@ -33,39 +72,6 @@ function updateRecipeCards(clickedElement) {
 
     // Mise à jour du nombre total de recettes
     updateTotalRecipes();
-}
-
-// Ajout d' écouteurs d'événements de clic pour chaque option de recherche
-ingredientsOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        updateRecipeCards(option.textContent);
-    });
-});
-
-applianceOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        updateRecipeCards(option.textContent);
-    });
-});
-
-ustensilsOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        updateRecipeCards(option.textContent);
-    });
-});
-
-// Fonction de filtrage des options
-function filterOptions(options, searchText) {
-    searchText = searchText.toLowerCase();
-
-    options.forEach(option => {
-        const optionText = option.textContent.toLowerCase();
-        if (optionText.includes(searchText)) {
-            option.style.display = '';
-        } else {
-            option.style.display = 'none';
-        }
-    });
 }
 
 //Gestion de la recherche d'ingrédients
