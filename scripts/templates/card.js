@@ -1,6 +1,4 @@
 // templates/card.js
-import { cardDetails } from '../../scripts/models/data-card.js';
-
 export function createCardHTML(card) {
   return `
   <a href="#" class="recipe-card-link">

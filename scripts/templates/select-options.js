@@ -1,22 +1,26 @@
+// Importation des données des cartes
 import { cardDetails } from '../models/data-card.js';
 
+// Sélection des éléments DOM
 const labelIngredient = document.querySelector('#ingredientsList');
 const labelUstensils = document.querySelector('#ustensilsList');
 const labelAppliance = document.querySelector('#appliancesList');
 
-const uniqueIngredients = [];
-const uniqueUstensils = [];
-const uniqueAppliance = [];
-
 const filterButtons = document.querySelectorAll('.filterBtn');
 
+// Ajoute des options aux éléments de liste déroulante
+function addOptions(uniqueItems, labelElement) {
+    uniqueItems.forEach(item => {
+        const option = document.createElement('option');
+        option.textContent = item;
+        labelElement.appendChild(option);
+    });
+}
+
+// Gestion des événements des boutons de filtrage
 filterButtons.forEach(filterButton => {
     filterButton.addEventListener('click', () => {
-        if (filterButton.classList.contains('active')) {
-            filterButton.classList.remove('active');
-        } else {
-            filterButton.classList.add('active');
-        }
+        filterButton.classList.toggle('active');
     });
 
     const searchInput = filterButton.querySelector('.filterInput');
@@ -25,40 +29,25 @@ filterButtons.forEach(filterButton => {
     });
 });
 
-// Créer les options pour les listes déroulantes Ingrédients, Ustensiles et Appareils
+// Création d'ensembles (set) pour stocker les éléments uniques
+const uniqueIngredients = new Set();
+const uniqueUstensils = new Set();
+const uniqueAppliance = new Set();
+
+// Ajoute les éléments uniques aux ensembles
 cardDetails.forEach(label => {
     label.ingredients.forEach(ingredient => {
-        if (!uniqueIngredients.includes(ingredient.ingredient)) {
-            uniqueIngredients.push(ingredient.ingredient);
-        }
+        uniqueIngredients.add(ingredient.ingredient);
     });
 
     label.ustensils.forEach(ustensils => {
-        if (!uniqueUstensils.includes(ustensils)) {
-            uniqueUstensils.push(ustensils);
-        }
+        uniqueUstensils.add(ustensils);
     });
 
-    if (!uniqueAppliance.includes(label.appliance)) {
-        uniqueAppliance.push(label.appliance);
-    }
+    uniqueAppliance.add(label.appliance);
 });
 
-uniqueIngredients.forEach(ingredient => {
-    const option = document.createElement('option');
-    option.textContent = ingredient;
-    labelIngredient.appendChild(option);
-});
-
-uniqueUstensils.forEach(ustensils => {
-    const formattedUstensils = ustensils.charAt(0).toUpperCase() + ustensils.slice(1);
-    const option = document.createElement('option');
-    option.textContent = formattedUstensils;
-    labelUstensils.appendChild(option);
-});
-
-uniqueAppliance.forEach(appliance => {
-    const option = document.createElement('option');
-    option.textContent = appliance;
-    labelAppliance.appendChild(option);
-});
+// Ajoute les options aux éléments de liste déroulante
+addOptions(uniqueIngredients, labelIngredient);
+addOptions(uniqueUstensils, labelUstensils);
+addOptions(uniqueAppliance, labelAppliance);

@@ -137,7 +137,7 @@ ustensilsSearch.forEach(input => {
 // Fonction pour mettre à jour le nombre total de recettes
 function updateTotalRecipes() {
     const totalRecipesElement = document.getElementById('totalRecipes');
-    const totalRecipesCount = document.querySelectorAll('.recipe-card').length; // Modifier la sélecteur selon votre structure HTML
+    const totalRecipesCount = document.querySelectorAll('.recipe-card').length;
     totalRecipesElement.textContent = `Total de recettes : ${totalRecipesCount}`;
 }
 
